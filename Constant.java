@@ -15,6 +15,9 @@ public class Constant implements Function {
         return new Constant(0);
     }
     
-    
+    @Override
+    public String toString() {
+        return Double.toString(value);
+    }
 
 }

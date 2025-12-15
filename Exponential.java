@@ -21,4 +21,9 @@ public class Exponential implements Function {
     public Function differentate() {
         return this.times(add(exponent.times(base.differentate().over(base)), exponent.differentate().times(ln(base))));
     }
+
+    @Override
+    public String toString() {
+        return "(" + base.toString() + ")^(" + exponent.toString() + ")";
+    }
 }

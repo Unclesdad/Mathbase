@@ -18,5 +18,10 @@ public class Power implements Function {
     public Function differentate() {
         return new Multiplication(new Constant(power), new Power(argument, power - 1)); // power rule
     }
+
+    @Override
+    public String toString() {
+        return "(" + argument.toString() + ")^" + Double.toString(power);
+    }
     
 }

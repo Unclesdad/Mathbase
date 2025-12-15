@@ -18,5 +18,10 @@ public class Addition implements Function {
     public Function differentate() {
         return new Addition(func1.differentate(), func2.differentate());
     }
+
+    @Override
+    public String toString() {
+        return "(" + func1.toString() + " + " + func2.toString() + ")";
+    }
     
 }

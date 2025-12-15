@@ -20,4 +20,8 @@ public class Multiplication implements Function {
         return new Addition(new Multiplication(func1.differentate(), func2), new Multiplication(func1, func2.differentate())); // product rule
     }
     
+    @Override
+    public String toString() {
+        return func1.toString() + " * " + func2.toString();
+    }
 }
