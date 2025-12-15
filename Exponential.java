@@ -1,24 +1,24 @@
 public class Exponential implements Function {
-    private final Function baseln; // natural log of the base
-    private final Function argument; // argument of the function
+    private final Function base; // base
+    private final Function exponent; // exponent
 
-    public Exponential(Function argument, Function base) {
-        this.baseln = new Logarithm(base); // ln of base
-        this.argument = argument;
+    public Exponential(Function base, Function exponent) {
+        this.base = base; 
+        this.exponent = exponent;
     }
 
-    public Exponential(Function argument) {
-        this.baseln = new Constant(1); // ln(e) = 1
-        this.argument = argument;
+    public Exponential(Function exponent) {
+        this.base = new Constant(1); // ln(e) = 1
+        this.exponent = exponent;
     }
 
     @Override
     public double evaluate(double value) {
-        return Math.exp(argument.evaluate(value) * baseln.evaluate(value)); // e^(lnb * arg)
+        return Math.pow(base.evaluate(value), exponent.evaluate(value));
     }
 
     @Override
     public Function differentate() {
-        return 
+        return this.times(add(exponent.times(base.differentate().over(base)), exponent.differentate().times(ln(base))));
     }
 }

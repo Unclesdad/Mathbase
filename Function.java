@@ -1,6 +1,6 @@
 
 
-public interface Function {
+public interface Function extends CombinationUtils {
 
     public double evaluate(double value);
 
@@ -15,10 +15,18 @@ public interface Function {
     }
 
     public default Function minus(Function func) {
-        return new Addition(this, func.times(new Constant(-1)));
+        return new Addition(this, func.times(just(-1)));
     }
 
     public default Function over(Function func) {
         return new Multiplication(this, new Power(func, -1));
+    }
+
+    public default Function toThe(Function func) {
+        return new Exponential(this, func);
+    }
+
+    public default Function toThe(double power) {
+        return new Power(this, power);
     }
 }

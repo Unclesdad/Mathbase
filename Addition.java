@@ -5,6 +5,8 @@ public class Addition implements Function {
     public Addition(Function func1, Function func2) {
         this.func1 = func1;
         this.func2 = func2;
+
+        // if either is equal to 0 return the other
     }
 
     @Override

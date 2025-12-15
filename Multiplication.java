@@ -5,6 +5,9 @@ public class Multiplication implements Function {
     public Multiplication(Function func1, Function func2) {
         this.func1 = func1;
         this.func2 = func2;
+
+        // if either is equal to 0, return constant 0
+        // if either is equal to 1, return the other
     }
 
     @Override

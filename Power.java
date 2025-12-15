@@ -1,7 +1,7 @@
 
 public class Power implements Function {
-    private double power;
-    private Function argument;
+    private final double power;
+    private final Function argument;
 
     // an optimized version of 
     public Power(Function argument, double power) {
