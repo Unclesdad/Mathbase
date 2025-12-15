@@ -24,4 +24,8 @@ public class Power implements Function {
         return "(" + argument.toString() + ")^" + Double.toString(power);
     }
     
+    @Override
+    public boolean isConstant() {
+        return argument.isConstant();
+    }
 }

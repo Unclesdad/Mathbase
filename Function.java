@@ -6,6 +6,8 @@ public interface Function extends CombinationUtils {
 
     public Function differentate();
 
+    public boolean isConstant();
+
     public default Function plus(Function func) {
         return new Addition(this, func);
     }

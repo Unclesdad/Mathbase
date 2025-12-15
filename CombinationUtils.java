@@ -19,7 +19,7 @@ public interface CombinationUtils {
         return new Exponential(base, exponent);
     }
 
-    public default Function just(double value) {
+    public default Constant just(double value) {
         return new Constant(value);
     }
 

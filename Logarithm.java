@@ -22,7 +22,18 @@ public class Logarithm implements Function {
 
     @Override
     public Function differentate() {
-        return divide(subtract(argument.differentate().over(argument), divide(base.differentate().times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base));
+        if (isln) {
+            return argument.differentate().over(argument);
+        }
+        else {
+            return divide(subtract(argument.differentate().over(argument), divide(base.differentate().times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base));
+        }
+    }
+
+    @Override
+    public boolean isConstant() {
+        // TODO kinda wrong but its ok for now
+        return base.isConstant() && argument.isConstant();
     }
 
     @Override

@@ -19,5 +19,10 @@ public class Parameter implements Function {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
     
 }
