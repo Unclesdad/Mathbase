@@ -25,8 +25,8 @@ public class Exponential implements Function {
     }
 
     @Override
-    public Function differentate(Parameter wrt) {
-        return this.times(add(exponent.times(base.simplified().differentate(wrt).over(base)), exponent.simplified().differentate(wrt).times(ln(base)))).simplified();
+    public Function differentiate(Parameter wrt) {
+        return this.times(add(exponent.times(base.simplified().differentiate(wrt).over(base)), exponent.simplified().differentiate(wrt).times(ln(base)))).simplified();
     }
 
     @Override

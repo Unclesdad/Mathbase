@@ -36,8 +36,8 @@ public class Addition implements Function {
     }
 
     @Override
-    public Function differentate(Parameter wrt) {
-        return new Addition(func1.simplified().differentate(wrt), func2.simplified().differentate(wrt)).simplified();
+    public Function differentiate(Parameter wrt) {
+        return new Addition(func1.simplified().differentiate(wrt), func2.simplified().differentiate(wrt)).simplified();
     }
 
     @Override

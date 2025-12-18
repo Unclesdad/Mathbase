@@ -4,7 +4,7 @@ public interface Function extends CombinationUtils {
 
     public double evaluate(double value);
 
-    public Function differentate(Parameter wrt);
+    public Function differentiate(Parameter wrt);
 
     public boolean isConstant();
 

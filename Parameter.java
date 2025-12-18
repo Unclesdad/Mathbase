@@ -11,7 +11,7 @@ public class Parameter implements Function {
     }
 
     @Override
-    public Function differentate(Parameter wrt) {
+    public Function differentiate(Parameter wrt) {
         if (wrt.equals(this)) {
             return just(1);
         }

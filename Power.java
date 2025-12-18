@@ -15,8 +15,8 @@ public class Power implements Function {
     }
 
     @Override
-    public Function differentate(Parameter wrt) {
-        Function differentiatedArg = argument.differentate(wrt).simplified(); // check if identically zero (const, or differentiated wrt wrong variable)
+    public Function differentiate(Parameter wrt) {
+        Function differentiatedArg = argument.differentiate(wrt).simplified(); // check if identically zero (const, or differentiated wrt wrong variable)
         if (differentiatedArg.isConstant() && differentiatedArg.evaluate(0) == 0) {
             return just(0);
         }

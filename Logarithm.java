@@ -17,16 +17,16 @@ public class Logarithm implements Function {
 
     @Override
     public double evaluate(double value) {
-        return Math.log(value) / Math.log(base.evaluate(value)); // change of base formula 
+        return Math.log(argument.evaluate(value)) / Math.log(base.evaluate(value)); // change of base formula 
     }
 
     @Override
-    public Function differentate(Parameter wrt) {
+    public Function differentiate(Parameter wrt) {
         if (isln) {
-            return argument.differentate(wrt).over(argument);
+            return argument.differentiate(wrt).over(argument);
         }
         else {
-            return divide(subtract(argument.simplified().differentate(wrt).over(argument), divide(base.simplified().differentate(wrt).times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base)).simplified();
+            return divide(subtract(argument.simplified().differentiate(wrt).over(argument), divide(base.simplified().differentiate(wrt).times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base)).simplified();
         }
     }
 
