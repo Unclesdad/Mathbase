@@ -33,8 +33,8 @@ public class Multiplication implements Function {
     }
 
     @Override
-    public Function differentate() {
-        return new Addition(new Multiplication(func1.differentate(), func2), new Multiplication(func1, func2.differentate())); // product rule
+    public Function differentate(Parameter wrt) {
+        return new Addition(new Multiplication(func1.differentate(wrt), func2), new Multiplication(func1, func2.differentate(wrt))); // product rule
     }
 
     @Override

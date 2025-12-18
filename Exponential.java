@@ -80,8 +80,8 @@ public class Exponential implements Function {
     }
 
     @Override
-    public Function differentate() {
-        return this.times(add(exponent.times(base.differentate().over(base)), exponent.differentate().times(ln(base))));
+    public Function differentate(Parameter wrt) {
+        return this.times(add(exponent.times(base.differentate(wrt).over(base)), exponent.differentate(wrt).times(ln(base))));
     }
 
     @Override

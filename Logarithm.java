@@ -21,12 +21,12 @@ public class Logarithm implements Function {
     }
 
     @Override
-    public Function differentate() {
+    public Function differentate(Parameter wrt) {
         if (isln) {
-            return argument.differentate().over(argument);
+            return argument.differentate(wrt).over(argument);
         }
         else {
-            return divide(subtract(argument.differentate().over(argument), divide(base.differentate().times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base));
+            return divide(subtract(argument.differentate(wrt).over(argument), divide(base.differentate(wrt).times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base));
         }
     }
 

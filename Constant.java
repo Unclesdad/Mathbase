@@ -11,7 +11,7 @@ public class Constant implements Function {
     }
 
     @Override
-    public Function differentate() {
+    public Function differentate(Parameter wrt) {
         return new Constant(0);
     }
 

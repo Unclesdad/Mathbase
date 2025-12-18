@@ -11,8 +11,13 @@ public class Parameter implements Function {
     }
 
     @Override
-    public Function differentate() {
-        return just(1);
+    public Function differentate(Parameter wrt) {
+        if (wrt.equals(this)) {
+            return just(1);
+        }
+        else {
+            return just(0);
+        }
     }
 
     @Override
