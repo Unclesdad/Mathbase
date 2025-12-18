@@ -22,12 +22,20 @@ public class Constant implements Function {
     
     @Override
     public String toString() {
-        if (value % 1 == 0) {
+        if (value == 0) {
+            return "";
+        }
+        else if (value % 1 == 0) {
             return Integer.toString((int) value);
         }
         else {
         return Double.toString(value);
         }
+    }
+
+    @Override
+    public Function simplified() {
+        return this;
     }
 
 }

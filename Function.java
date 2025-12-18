@@ -8,6 +8,12 @@ public interface Function extends CombinationUtils {
 
     public boolean isConstant();
 
+    public Function simplified();
+
+    public default boolean identicalTo(double value) {
+        return this.isConstant() && this.evaluate(0) == value;
+    }
+
     public default Function plus(Function func) {
         return new Addition(this, func);
     }

@@ -26,7 +26,7 @@ public class Logarithm implements Function {
             return argument.differentate(wrt).over(argument);
         }
         else {
-            return divide(subtract(argument.differentate(wrt).over(argument), divide(base.differentate(wrt).times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base));
+            return divide(subtract(argument.simplified().differentate(wrt).over(argument), divide(base.simplified().differentate(wrt).times(new Logarithm(argument)), base.times(new Logarithm(base)))), new Logarithm(base)).simplified();
         }
     }
 
@@ -41,8 +41,24 @@ public class Logarithm implements Function {
         if (isln) {
             return "ln(" + argument.toString() + ")";
         }
+        else if (isConstant()) {
+            return Double.toString(evaluate(0));
+        }
         else {
             return "logbase(" + base.toString() + ", " + argument.toString() + ")";
+        }
+    }
+
+    @Override
+    public Function simplified() {
+        if (isConstant()) {
+            return just(evaluate(0));
+        }
+        else if (argument.identicalTo(1)) {
+            return just(0);
+        }
+        else {
+            return new Logarithm(base.simplified(), argument.simplified());
         }
     }
 }

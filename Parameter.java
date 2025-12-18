@@ -29,5 +29,10 @@ public class Parameter implements Function {
     public boolean isConstant() {
         return false;
     }
+
+    @Override
+    public Function simplified() {
+        return this;
+    }
     
 }

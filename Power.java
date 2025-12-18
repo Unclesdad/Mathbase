@@ -16,7 +16,7 @@ public class Power implements Function {
 
     @Override
     public Function differentate(Parameter wrt) {
-        Function differentiatedArg = argument.differentate(wrt); // check if identically zero (const, or differentiated wrt wrong variable)
+        Function differentiatedArg = argument.differentate(wrt).simplified(); // check if identically zero (const, or differentiated wrt wrong variable)
         if (differentiatedArg.isConstant() && differentiatedArg.evaluate(0) == 0) {
             return just(0);
         }
@@ -31,5 +31,18 @@ public class Power implements Function {
     @Override
     public boolean isConstant() {
         return argument.isConstant();
+    }
+
+    @Override
+    public Function simplified() {
+        if (power == 0) {
+            return just(1);
+        }
+        else if (power == 1) {
+            return argument.simplified();
+        }
+        else {
+            return new Power(argument.simplified(), power);
+        }
     }
 }

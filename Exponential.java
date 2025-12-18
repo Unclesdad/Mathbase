@@ -1,10 +1,6 @@
-import java.util.Optional;
-
 public class Exponential implements Function {
     private final Function base; // base
     private final Function exponent; // exponent
-
-    private final Optional<Function> simplified;
 
     private final boolean isExp;
 
@@ -12,43 +8,8 @@ public class Exponential implements Function {
         this.base = base; 
         this.exponent = exponent;
 
-        if (base.isConstant()) {
-            double value = base.evaluate(0);
-            if (Math.abs(Math.E - value) < 10e-6) {
-                isExp = true; // close enough to exp
-            }
-            else {
-                isExp = false;
-            }
+        isExp = base.identicalTo(Math.E);
 
-            if (value == 0) {
-                simplified = Optional.of(just(0));
-            }
-            else if (value == 1) {
-                simplified = Optional.of(just(1));
-            }
-            else {
-                simplified = Optional.empty();
-            }
-        }
-        else if (exponent.isConstant()) {
-            isExp = false;
-            double value = exponent.evaluate(0);
-            if (value == 0) {
-                simplified = Optional.of(just(1));
-            }
-            else if (value == 1) {
-                simplified = Optional.of(base);
-            }
-            else {
-                simplified = Optional.empty();
-            }
-        }
-        else {
-            simplified = Optional.empty();
-            isExp = false;
-        }
-        
     }
 
     public Exponential(Function exponent) {
@@ -56,22 +17,6 @@ public class Exponential implements Function {
         this.exponent = exponent;
 
         isExp = true;
-
-        if (exponent.isConstant()) {
-            double value = exponent.evaluate(0);
-            if (value == 0) {
-                simplified = Optional.of(just(1));
-            }
-            else if (value == 1) {
-                simplified = Optional.of(base);
-            }
-            else {
-                simplified = Optional.empty();
-            }
-        }
-        else {
-            simplified = Optional.empty();
-        }
     }
 
     @Override
@@ -81,7 +26,7 @@ public class Exponential implements Function {
 
     @Override
     public Function differentate(Parameter wrt) {
-        return this.times(add(exponent.times(base.differentate(wrt).over(base)), exponent.differentate(wrt).times(ln(base))));
+        return this.times(add(exponent.times(base.simplified().differentate(wrt).over(base)), exponent.simplified().differentate(wrt).times(ln(base)))).simplified();
     }
 
     @Override
@@ -92,6 +37,25 @@ public class Exponential implements Function {
 
     @Override
     public String toString() {
-        return simplified.isPresent() ? simplified.get().toString() : (isExp ? "e" : "(" + base.toString() + ")") + "^(" + exponent.toString() + ")";
+        return (isExp ? "e" : "(" + base.toString() + ")") + "^(" + exponent.toString() + ")";
+    }
+
+    @Override
+    public Function simplified() {
+        if (isConstant()) {
+            return just(evaluate(0));
+        }
+        else if (base.identicalTo(0)) {
+            return just(0);
+        }
+        else if (base.identicalTo(1)) {
+            return just(1);
+        }
+        else if (exponent.isConstant()) {
+            return new Power(base, exponent.evaluate(0)).simplified();
+        }
+        else {
+            return new Exponential(base.simplified(),exponent.simplified());
+        }
     }
 }

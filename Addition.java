@@ -1,26 +1,33 @@
-import java.util.Optional;
-
 public class Addition implements Function {
     private final Function func1;
     private final Function func2;
-
-    private final Optional<Function> simplified;
 
     public Addition(Function func1, Function func2) {
         this.func1 = func1;
         this.func2 = func2;
 
-        if (func1.isConstant() && func1.evaluate(0) == 0) {
-            simplified = Optional.of(func2);
+        // if either is equal to 0 return the other
+    }
+
+    @Override
+    public Function simplified() {
+        boolean func1IsZero = func1.identicalTo(0);
+        boolean func2IsZero = func2.identicalTo(0);
+        if (isConstant()) {
+            return just(evaluate(0));
         }
-        else if (func2.isConstant() && func2.evaluate(0) == 0) {
-            simplified = Optional.of(func1);
+        else if (func1IsZero && func2IsZero) {
+            return just(0);
+        }
+        else if (func1IsZero) {
+            return func2.simplified();
+        }
+        else if (func2IsZero) {
+            return func1.simplified();
         }
         else {
-            simplified = Optional.empty();
+            return new Addition(func1.simplified(), func2.simplified());
         }
-
-        // if either is equal to 0 return the other
     }
 
     @Override
@@ -30,7 +37,7 @@ public class Addition implements Function {
 
     @Override
     public Function differentate(Parameter wrt) {
-        return new Addition(func1.differentate(wrt), func2.differentate(wrt));
+        return new Addition(func1.simplified().differentate(wrt), func2.simplified().differentate(wrt)).simplified();
     }
 
     @Override
@@ -41,7 +48,7 @@ public class Addition implements Function {
 
     @Override
     public String toString() {
-        return simplified.isPresent() ? simplified.get().toString() : "(" + func1.toString() + " + " + func2.toString() + ")";
+        return "(" + func1.toString() + " + " + func2.toString() + ")";
     }
     
 }

@@ -34,7 +34,7 @@ public class Multiplication implements Function {
 
     @Override
     public Function differentate(Parameter wrt) {
-        return new Addition(new Multiplication(func1.differentate(wrt), func2), new Multiplication(func1, func2.differentate(wrt))); // product rule
+        return new Addition(new Multiplication(func1.simplified().differentate(wrt), func2), new Multiplication(func1, func2.simplified().differentate(wrt))).simplified(); // product rule
     }
 
     @Override
@@ -58,5 +58,21 @@ public class Multiplication implements Function {
             }
         }
         return func1.toString() + " * " + func2.toString();
+    }
+
+    @Override
+    public Function simplified() {
+        if (func1.identicalTo(0) || func2.identicalTo(0)) {
+            return just(0);
+        }
+        else if (func1.identicalTo(1)) {
+            return func2.simplified();
+        }
+        else if (func2.identicalTo(1)) {
+            return func1.simplified();
+        }
+        else {
+            return new Multiplication(func1.simplified(), func2.simplified());
+        }
     }
 }
