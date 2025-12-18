@@ -62,17 +62,24 @@ public class Multiplication implements Function {
 
     @Override
     public Function simplified() {
-        if (func1.identicalTo(0) || func2.identicalTo(0)) {
+        if (func1.identicalTo(just(0)) || func2.identicalTo(just(0))) {
             return just(0);
         }
-        else if (func1.identicalTo(1)) {
+        else if (func1.identicalTo(just(1))) {
             return func2.simplified();
         }
-        else if (func2.identicalTo(1)) {
+        else if (func2.identicalTo(just(1))) {
             return func1.simplified();
         }
         else {
             return new Multiplication(func1.simplified(), func2.simplified());
         }
+    }
+
+    @Override
+    public boolean identicalTo(Function other) {
+        if (!(other instanceof Multiplication)) return false;
+        Multiplication otherMult = (Multiplication) other;
+        return func1.identicalTo(otherMult.func1) && func2.identicalTo(otherMult.func2);
     }
 }

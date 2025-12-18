@@ -54,11 +54,18 @@ public class Logarithm implements Function {
         if (isConstant()) {
             return just(evaluate(0));
         }
-        else if (argument.identicalTo(1)) {
+        else if (argument.identicalTo(just(1))) {
             return just(0);
         }
         else {
             return new Logarithm(base.simplified(), argument.simplified());
         }
+    }
+
+    @Override
+    public boolean identicalTo(Function other) {
+        if (!(other instanceof Logarithm)) return false;
+        Logarithm otherLog = (Logarithm) other;
+        return base.identicalTo(otherLog.base) && argument.identicalTo(otherLog.argument);
     }
 }

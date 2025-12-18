@@ -11,8 +11,8 @@ public class Addition implements Function {
 
     @Override
     public Function simplified() {
-        boolean func1IsZero = func1.identicalTo(0);
-        boolean func2IsZero = func2.identicalTo(0);
+        boolean func1IsZero = func1.identicalTo(just(0));
+        boolean func2IsZero = func2.identicalTo(just(0));
         if (isConstant()) {
             return just(evaluate(0));
         }
@@ -50,5 +50,12 @@ public class Addition implements Function {
     public String toString() {
         return "(" + func1.toString() + " + " + func2.toString() + ")";
     }
-    
+
+    @Override
+    public boolean identicalTo(Function other) {
+        if (!(other instanceof Addition)) return false;
+        Addition otherAdd = (Addition) other;
+        return func1.identicalTo(otherAdd.func1) && func2.identicalTo(otherAdd.func2);
+    }
+
 }

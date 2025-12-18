@@ -5,10 +5,10 @@ public class Exponential implements Function {
     private final boolean isExp;
 
     public Exponential(Function base, Function exponent) {
-        this.base = base; 
+        this.base = base;
         this.exponent = exponent;
 
-        isExp = base.identicalTo(Math.E);
+        isExp = base.identicalTo(just(Math.E));
 
     }
 
@@ -45,10 +45,10 @@ public class Exponential implements Function {
         if (isConstant()) {
             return just(evaluate(0));
         }
-        else if (base.identicalTo(0)) {
+        else if (base.identicalTo(just(0))) {
             return just(0);
         }
-        else if (base.identicalTo(1)) {
+        else if (base.identicalTo(just(1))) {
             return just(1);
         }
         else if (exponent.isConstant()) {
@@ -57,5 +57,12 @@ public class Exponential implements Function {
         else {
             return new Exponential(base.simplified(),exponent.simplified());
         }
+    }
+
+    @Override
+    public boolean identicalTo(Function other) {
+        if (!(other instanceof Exponential)) return false;
+        Exponential otherExp = (Exponential) other;
+        return base.identicalTo(otherExp.base) && exponent.identicalTo(otherExp.exponent);
     }
 }

@@ -38,4 +38,9 @@ public class Constant implements Function {
         return this;
     }
 
+    @Override
+    public boolean identicalTo(Function other) {
+        return other instanceof Constant && ((Constant) other).value == this.value;
+    }
+
 }

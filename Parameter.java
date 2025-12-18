@@ -34,5 +34,10 @@ public class Parameter implements Function {
     public Function simplified() {
         return this;
     }
-    
+
+    @Override
+    public boolean identicalTo(Function other) {
+        return other instanceof Parameter && ((Parameter) other).name.equals(this.name);
+    }
+
 }

@@ -10,9 +10,7 @@ public interface Function extends CombinationUtils {
 
     public Function simplified();
 
-    public default boolean identicalTo(double value) {
-        return this.isConstant() && this.evaluate(0) == value;
-    }
+    public boolean identicalTo(Function other);
 
     public default Function plus(Function func) {
         return new Addition(this, func);

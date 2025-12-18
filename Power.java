@@ -45,4 +45,11 @@ public class Power implements Function {
             return new Power(argument.simplified(), power);
         }
     }
+
+    @Override
+    public boolean identicalTo(Function other) {
+        if (!(other instanceof Power)) return false;
+        Power otherPower = (Power) other;
+        return this.power == otherPower.power && argument.identicalTo(otherPower.argument);
+    }
 }
